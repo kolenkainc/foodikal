@@ -1,0 +1,46 @@
+{
+  "configurations": [
+    {
+      "name": "Attach to backend",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "resolveSourceMapLocations": null,
+      "attachExistingChildren": false,
+      "autoAttachChildProcesses": false,
+    },
+    {
+      "name": "Attach to frontend",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/web/src",
+      "sourceMaps": true,
+      "resolveSourceMapLocations": [
+        "!**/node_modules/**"
+      ],
+      "runtimeArgs": [
+        "--disable-web-security",
+     ],
+    },
+    {
+      "name": "Current api test file",
+      "type": "node",
+      "request": "launch",
+      "autoAttachChildProcesses": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**"
+      ],
+      "program": "${workspaceRoot}/api/node_modules/vitest/vitest.mjs",
+      "args": [
+        "run",
+        "${relativeFile}",
+        "--config",
+        "${workspaceRoot}/api/vitest.config.ts"
+      ],
+      "smartStep": true,
+      "console": "integratedTerminal"
+    }
+  ]
+}
