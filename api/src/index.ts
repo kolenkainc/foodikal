@@ -4,20 +4,13 @@ import { sentry } from '@hono/sentry';
 import { Context, Hono } from 'hono';
 
 import { logger as loggerMiddleware } from 'hono/logger';
-import { applicationContextMiddleware } from './application-context-middleware';
-import { elasticsearchLogsMiddleware } from './elasticsearch-logs-middleware';
 import { swaggerUI } from '@hono/swagger-ui';
 import { cors } from 'hono/cors';
 import { createHub } from 'honohub';
-import hubConfig, { getHub } from '../hub.config';
+import { getHub } from '../hub.config';
 
 const app = new Hono<{ Bindings: Env }>();
-app.use(
-  sentry(),
-  loggerMiddleware(),
-  applicationContextMiddleware(),
-  elasticsearchLogsMiddleware()
-);
+app.use(sentry(), loggerMiddleware());
 app.use(
   '/*',
   cors({
@@ -35,8 +28,10 @@ app.get('/healthcheck', async (c: Context) => {
   return c.json('ok');
 });
 
-app.all('/*', async (c: Context<{ Bindings: Env }>) => {
-  const hubApp = createHub(getHub(c.env.HYPERDRIVE.connectionString));
+app.all('/hub', async (c: Context) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const env: any = c.env as any;
+  const hubApp = createHub(getHub(env.HYPERDRIVE.connectionString));
   return hubApp.fetch(c.req.raw, c.env, c.executionCtx);
 });
 
