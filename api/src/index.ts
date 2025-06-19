@@ -30,7 +30,13 @@ app.get('/healthcheck', async (c: Context) => {
 
 app.route(
   '/hub',
-  createHub(getHub((getContext().env as any).HYPERDRIVE.connectionString))
+  // createHub(getHub((getContext().env as any).HYPERDRIVE.connectionString))
+  createHub(
+    getHub(
+      // String(process.env.WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE)
+      'postgres://foodikal-user:KqCQzyH2akGB9gQ4@localhost:5432/foodikal-production'
+    )
+  )
 );
 
 app.get('/swagger', swaggerUI({ url: '/swagger.yml' }));

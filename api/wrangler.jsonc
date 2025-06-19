@@ -63,7 +63,8 @@
   "hyperdrive": [
     {
       "binding": "HYPERDRIVE",
-      "id": "b7cf9ba0830c43088b9bdec4e38a6fe1"
+      "id": "b7cf9ba0830c43088b9bdec4e38a6fe1",
+      "localConnectionString": "postgres://foodikal-user:KqCQzyH2akGB9gQ4@localhost:5432/foodikal-production"
     }
   ]
 }

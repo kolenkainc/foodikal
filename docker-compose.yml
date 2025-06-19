@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17.5-alpine3.21
+    container_name: foodikal-postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - pgsdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=foodikal-user
+      - POSTGRES_PASSWORD=KqCQzyH2akGB9gQ4
+      - POSTGRES_DB=foodikal-production
+
+volumes:
+  pgsdata:
