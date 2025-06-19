@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { withSentry } from '@sentry/cloudflare';
 import { sentry } from '@hono/sentry';
 import { Context, Hono } from 'hono';
-
+import { contextStorage, getContext } from 'hono/context-storage';
 import { logger as loggerMiddleware } from 'hono/logger';
 import { swaggerUI } from '@hono/swagger-ui';
 import { cors } from 'hono/cors';
@@ -10,7 +10,7 @@ import { createHub } from 'honohub';
 import { getHub } from '../hub.config';
 
 const app = new Hono<{ Bindings: Env }>();
-app.use(sentry(), loggerMiddleware());
+app.use(sentry(), loggerMiddleware(), contextStorage());
 app.use(
   '/*',
   cors({
@@ -28,12 +28,10 @@ app.get('/healthcheck', async (c: Context) => {
   return c.json('ok');
 });
 
-app.all('/hub', async (c: Context) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const env: any = c.env as any;
-  const hubApp = createHub(getHub(env.HYPERDRIVE.connectionString));
-  return hubApp.fetch(c.req.raw, c.env, c.executionCtx);
-});
+app.route(
+  '/hub',
+  createHub(getHub((getContext().env as any).HYPERDRIVE.connectionString))
+);
 
 app.get('/swagger', swaggerUI({ url: '/swagger.yml' }));
 
