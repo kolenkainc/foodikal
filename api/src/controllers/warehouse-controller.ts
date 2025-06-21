@@ -1,5 +1,5 @@
 import { type Context, Hono } from 'hono';
-import { applicationCxt } from '../application-context-middleware';
+import { applicationCxt } from '../db/application-context-middleware';
 import { CreateItemRequest } from '../views';
 import { WarehouseItem } from '../views';
 import { WarehouseService } from '../services/warehouse-service';

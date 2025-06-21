@@ -1,5 +1,5 @@
 import { type Context, Hono } from 'hono';
-import { applicationCxt } from '../application-context-middleware';
+import { applicationCxt } from '../db/application-context-middleware';
 import { DependencyContainer } from 'tsyringe';
 import { MovementService } from '../services/movement-service';
 import { MovementItem, MovementStatus } from '../views';
