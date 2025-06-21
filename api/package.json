@@ -32,10 +32,10 @@
     "@neondatabase/serverless": "^1.0.1",
     "@sentry/cloudflare": "^9.17.0",
     "@sentry/vite-plugin": "^3.2.4",
+    "drizzle-orm": "^0.44.2",
     "google-spreadsheet": "^4.1.4",
     "googleapis": "^148.0.0",
     "hono": "4.7.1",
-    "honohub": "^0.3.0",
     "postgres": "^3.4.5",
     "tsyringe": "^4.10.0"
   },
