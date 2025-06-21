@@ -1,6 +1,7 @@
 import { container, DependencyContainer } from 'tsyringe';
 import type { Context, MiddlewareHandler } from 'hono';
 import { createMiddleware } from 'hono/factory';
+import { ApplicationStorage } from './model/application-storage';
 import { TenantManagementStore } from './model/tenant-management-store';
 import { InventoryManagementStore } from './model/inventory-management-store';
 import type { GoogleServiceAccountCredentials } from './model/google-objects';
@@ -58,6 +59,9 @@ export async function containerBuilderAsync(
   });
   container.register<MovementService>(MovementService, {
     useValue: new MovementService(container.resolve(InventoryManagementStore))
+  });
+  container.register<ApplicationStorage>(ApplicationStorage, {
+    useValue: new ApplicationStorage(env.HYPERDRIVE.connectionString)
   });
   return container;
 }

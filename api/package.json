@@ -11,8 +11,10 @@
     "build": "npm run backend:types && tsc --build",
     "deploy": "wrangler deploy",
     "test": "vitest run --coverage",
-    "migrate:up": "ley up --dir=migrations --driver=postgres",
-    "migrate:down": "ley down --dir=migrations --driver=postgres"
+    "migrate:up1": "ley up --dir=migrations --driver=postgres",
+    "migrate:down1": "ley down --dir=migrations --driver=postgres",
+    "migrations:generate": "drizzle-kit generate",
+    "migrations:up": "drizzle-kit migrate"
   },
   "cloudflare": {
     "label": "Vite React Template",
@@ -36,7 +38,7 @@
     "google-spreadsheet": "^4.1.4",
     "googleapis": "^148.0.0",
     "hono": "4.7.1",
-    "postgres": "^3.4.5",
+    "postgres": "^3.4.7",
     "tsyringe": "^4.10.0"
   },
   "devDependencies": {
@@ -47,6 +49,7 @@
     "@types/node": "^22.13.17",
     "@vitest/coverage-v8": "^3.1.2",
     "dotenv": "^16.5.0",
+    "drizzle-kit": "^0.31.1",
     "eslint": "9.19.0",
     "globals": "15.14.0",
     "jsdom": "^26.1.0",
