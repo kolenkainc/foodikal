@@ -25,6 +25,5 @@ CREATE TABLE "orders" (
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-DROP TABLE "todos" CASCADE;--> statement-breakpoint
 ALTER TABLE "order_meals" ADD CONSTRAINT "order_meals_order_id_orders_id_fk" FOREIGN KEY ("order_id") REFERENCES "public"."orders"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "order_meals" ADD CONSTRAINT "order_meals_meal_id_meals_id_fk" FOREIGN KEY ("meal_id") REFERENCES "public"."meals"("id") ON DELETE no action ON UPDATE no action;
