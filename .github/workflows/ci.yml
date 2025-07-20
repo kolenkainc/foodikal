@@ -1,0 +1,89 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - "*"
+      - "!master"
+  pull_request:
+
+jobs:
+  build-deploy-web:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      deployments: write
+    defaults:
+      run:
+        working-directory: ./web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+          cache-dependency-path: ./mobile/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - uses: cloudflare/wrangler-action@v3.14.1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          workingDirectory: "web"
+          command: |
+            pages deploy dist --project-name=foodikal-web
+
+  build-deploy-api:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      checks: write
+      id-token: write
+      pull-requests: write
+    defaults:
+      run:
+        working-directory: ./api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+          cache-dependency-path: ./api/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      # - run: npm run test
+      #   env:
+      #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      # - name: Test Report
+      #   uses: mikepenz/action-junit-report@v5
+      #   if: success() || failure() # run this step even if previous step failed
+      #   with:
+      #     report_paths: ./api/junit.xml # Path to test results
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     check_name: api-unit-tests
+      #     summary: API unit tests
+      # - name: Upload coverage reports to Codecov
+      #   uses: codecov/codecov-action@v5
+      #   if: success() || failure() # run this step even if previous step failed
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     directory: "api"
+      - run: npm run build
+      - name: Run migrations
+        # run: npm run migrate:up
+        run: npm run db:migrate
+        env:
+          WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE: ${{ secrets.WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE }}
+          DATABASE_ENV: ${{ secrets.DATABASE_ENV }}
+          AIVEN_CA: ${{ secrets.AIVEN_CA }}
+      - uses: cloudflare/wrangler-action@v3.14.1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # Optional: Enable this if you want to have GitHub Deployments triggered
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          workingDirectory: "api"
+          secrets: |
+            DATABASE_ENV
+        env:
+          DATABASE_ENV: ${{ secrets.DATABASE_ENV }}
