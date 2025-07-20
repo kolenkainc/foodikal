@@ -7,7 +7,7 @@ const sql = neon(DATABASE_URL);
 
 const db = drizzle(sql);
 
-const main = async () => {
+const mainAsync = async () => {
   try {
     await migrate(db, {
       migrationsFolder: 'src/db/migrations'
@@ -20,4 +20,4 @@ const main = async () => {
   }
 };
 
-main();
+mainAsync();
