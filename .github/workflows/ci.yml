@@ -74,9 +74,9 @@ jobs:
         # run: npm run migrate:up
         run: npm run db:migrate
         env:
-          WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE: ${{ secrets.WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE }}
-          DATABASE_ENV: ${{ secrets.DATABASE_ENV }}
-          AIVEN_CA: ${{ secrets.AIVEN_CA }}
+          # WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE: ${{ secrets.WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          # AIVEN_CA: ${{ secrets.AIVEN_CA }}
       - uses: cloudflare/wrangler-action@v3.14.1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -84,6 +84,6 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           workingDirectory: "api"
           secrets: |
-            DATABASE_ENV
+            DATABASE_URL
         env:
-          DATABASE_ENV: ${{ secrets.DATABASE_ENV }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
