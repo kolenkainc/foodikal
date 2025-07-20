@@ -11,8 +11,8 @@
     "build": "npm run backend:types && tsc --build",
     "deploy": "wrangler deploy",
     "test": "vitest run --coverage",
-    "db:generate": "drizzle-kit generate --dialect postgresql --schema src/db/schema.ts --out src/db/migrations",
-    "db:migrate": "tsx ./src/db/migrate.ts",
+    "db:generate": "drizzle-kit generate --config=src/db/drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config=src/db/drizzle.config.ts",
     "db:seed": "tsx ./src/db/seed.ts"
   },
   "cloudflare": {
