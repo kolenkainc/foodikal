@@ -1,18 +1,24 @@
-const { parse } = require('pg-connection-string');
-require('dotenv').config();
+// const { parse } = require('pg-connection-string');
+// require('dotenv').config();
 
-const { host, port, database, user, password } = parse(
-  process.env.WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE
-);
+/*
+postgresql://
+neondb_owner:npg_nJt1yxWFuBa2
+@ep-lucky-cloud-a2tzbej5-pooler.eu-central-1.aws.neon.tech
+/neondb
+?sslmode=require
+&channel_binding=require
+*/
+
+// const { host, port, database, user, password } = parse(
+//   process.env.WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE
+// );
 
 module.exports = {
-  host: host,
-  port: port,
-  database: database,
-  username: user,
-  password: password,
-  ssl: {
-    rejectUnauthorized: true,
-    ca: process.env.AIVEN_CA
-  }
+  host: 'ep-lucky-cloud-a2tzbej5-pooler.eu-central-1.aws.neon.tech',
+  port: 443,
+  database: 'neondb',
+  username: 'neondb_owner',
+  password: 'npg_nJt1yxWFuBa2',
+  ssl: require
 };

@@ -11,8 +11,10 @@
     "build": "npm run backend:types && tsc --build",
     "deploy": "wrangler deploy",
     "test": "vitest run --coverage",
-    "db:generate": "drizzle-kit generate --dialect postgresql --schema src/db/schema.ts --out src/db/migrations",
-    "db:migrate": "tsx ./src/db/migrate.ts",
+    "db:generate1": "drizzle-kit generate --dialect postgresql --schema src/db/schema.ts --out src/db/migrations",
+    "db:migrate1": "tsx ./src/db/migrate.ts",
+    "db:generate": "drizzle-kit generate --config=src/db/drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config=src/db/drizzle.config.ts",
     "db:seed": "tsx ./src/db/seed.ts"
   },
   "cloudflare": {
@@ -53,6 +55,7 @@
     "globals": "15.14.0",
     "jsdom": "^26.1.0",
     "kolenkainc-honohub": "^0.4.1",
+    "ley": "^0.8.1",
     "lint-staged": "^16.0.0",
     "nolyfill": "^1.0.44",
     "pg-connection-string": "^2.8.5",
