@@ -7,7 +7,7 @@ const sql = neon(DATABASE_URL);
 
 const db = drizzle(sql);
 
-const main = async () => {
+const mainAsync = async () => {
   try {
     await migrate(db, {
       migrationsFolder: 'src/db/migrations'
@@ -15,9 +15,14 @@ const main = async () => {
 
     console.log('Migration successful');
   } catch (error) {
-    console.error(error);
-    process.exit(1);
+    const cause = (error as any)?.cause;
+    if (/relation ".*" already exists$/.test(cause)) {
+      console.warn(cause);
+    } else {
+      console.error(error);
+      process.exit(1);
+    }
   }
 };
 
-main();
+mainAsync();

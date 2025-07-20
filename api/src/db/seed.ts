@@ -31,7 +31,7 @@ const messages = [
   'Write integration tests'
 ];
 
-const main = async () => {
+const mainAsync = async () => {
   try {
     console.log('Seeding database');
 
@@ -50,4 +50,4 @@ const main = async () => {
   }
 };
 
-main();
+mainAsync();
