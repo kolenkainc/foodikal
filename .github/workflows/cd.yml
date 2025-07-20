@@ -1,14 +1,12 @@
-name: ci
+name: cd
 
 on:
   push:
     branches:
-      - "*"
-      - "!master"
-  pull_request:
+      - "master"
 
 jobs:
-  build-web:
+  build-deploy-web:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -33,7 +31,7 @@ jobs:
           command: |
             pages deploy dist --project-name=foodikal-web
 
-  build-api:
+  build-deploy-api:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
