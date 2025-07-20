@@ -1,43 +1,34 @@
 import 'reflect-metadata';
 import { withSentry } from '@sentry/cloudflare';
 import { sentry } from '@hono/sentry';
-import { Context, Hono } from 'hono';
-import { contextStorage, getContext } from 'hono/context-storage';
+import { Context, Env, Hono } from 'hono';
+import { contextStorage } from 'hono/context-storage';
 import { logger as loggerMiddleware } from 'hono/logger';
 import { swaggerUI } from '@hono/swagger-ui';
 import { cors } from 'hono/cors';
-import { createHub } from 'honohub';
-import { getHub } from '../hub.config';
+import { createHub } from 'kolenkainc-honohub';
+import hubConfig from '../hub.config';
 
 const app = new Hono<{ Bindings: Env }>();
 app.use(sentry(), loggerMiddleware(), contextStorage());
-app.use(
-  '/*',
-  cors({
-    origin: (origin, _: Context) => {
-      return origin.endsWith('foodikal.romashov.tech') ||
-        origin.endsWith('m.foodikal.romashov.tech')
-        ? origin
-        : 'http://localhost:5173';
-    }
-  })
-);
+app
+  .use(
+    '/*',
+    cors({
+      origin: (origin, _: Context) => {
+        return origin.endsWith('foodikal.romashov.tech') ||
+          origin.endsWith('m.foodikal.romashov.tech')
+          ? origin
+          : 'http://localhost:5173';
+      }
+    })
+  )
+  .route('/', createHub(hubConfig));
 
 app.get('/healthcheck', async (c: Context) => {
   console.log('Hello world from Cloudflare and ElasticSearch');
   return c.json('ok');
 });
-
-app.route(
-  '/hub',
-  // createHub(getHub((getContext().env as any).HYPERDRIVE.connectionString))
-  createHub(
-    getHub(
-      // String(process.env.WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE)
-      'postgres://foodikal-user:KqCQzyH2akGB9gQ4@localhost:5432/foodikal-production'
-    )
-  )
-);
 
 app.get('/swagger', swaggerUI({ url: '/swagger.yml' }));
 

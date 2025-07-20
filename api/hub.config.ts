@@ -1,15 +1,18 @@
 import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
-import { defineCollection, defineHub } from 'honohub';
+import { defineCollection, defineHub } from 'kolenkainc-honohub';
 import * as schema from './src/db/schema';
+import { DATABASE_URL } from './src/db';
 
-export const getHub = (connectionString: string) =>
-  defineHub({
-    db: drizzle(neon(connectionString), { schema }),
-    collections: [
-      defineCollection({
-        slug: 'todos',
-        schema: schema.todos
-      })
-    ]
-  });
+const neonSql = neon(DATABASE_URL);
+const db = drizzle(neonSql, { schema });
+
+export default defineHub({
+  db,
+  collections: [
+    defineCollection({
+      slug: 'todos',
+      schema: schema.todos
+    })
+  ]
+});
