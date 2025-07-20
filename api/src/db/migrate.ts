@@ -15,8 +15,13 @@ const mainAsync = async () => {
 
     console.log('Migration successful');
   } catch (error) {
-    console.error(error);
-    process.exit(1);
+    const cause = (error as any)?.cause;
+    if (/relation ".*" already exists$/.test(cause)) {
+      console.warn(error);
+    } else {
+      console.error(error);
+      process.exit(1);
+    }
   }
 };
 
