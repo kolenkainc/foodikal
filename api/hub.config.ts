@@ -11,8 +11,16 @@ export default defineHub({
   db,
   collections: [
     defineCollection({
-      slug: 'todos',
-      schema: schema.todos
+      slug: 'orders',
+      schema: schema.orders
+    }),
+    defineCollection({
+      slug: 'customers',
+      schema: schema.customers
+    }),
+    defineCollection({
+      slug: 'meals',
+      schema: schema.meals
     })
   ]
 });
