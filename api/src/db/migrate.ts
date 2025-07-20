@@ -17,7 +17,7 @@ const mainAsync = async () => {
   } catch (error) {
     const cause = (error as any)?.cause;
     if (/relation ".*" already exists$/.test(cause)) {
-      console.warn(error);
+      console.warn(cause);
     } else {
       console.error(error);
       process.exit(1);

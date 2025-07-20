@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 22
           cache: "npm"
-          cache-dependency-path: ./mobile/package-lock.json
+          cache-dependency-path: ./web/package-lock.json
       - run: npm ci
       - run: npm run build
       - uses: cloudflare/wrangler-action@v3.14.1
