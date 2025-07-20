@@ -1,7 +1,8 @@
 {
-  "name": "vite-react-template",
+  "name": "foodical-goods",
   "description": "A template for building a React application with Vite, Hono, and Cloudflare Workers",
   "version": "0.0.0",
+  "type": "module",
   "cloudflare": {
     "label": "Vite React Template",
     "products": [
@@ -15,9 +16,15 @@
     "publish": true
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.1",
+    "dotenv": "^17.2.0",
+    "drizzle-kit": "^0.31.4",
+    "drizzle-orm": "^0.44.3",
     "hono": "4.8.2",
+    "kolenkainc-honohub": "^0.4.1",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "tsx": "^4.20.3"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "1.7.5",
@@ -42,7 +49,9 @@
     "deploy": "wrangler deploy",
     "dev": "vite",
     "lint": "eslint .",
-    "preview": "npm run build && vite preview"
-  },
-  "type": "module"
+    "preview": "npm run build && vite preview",
+    "db:generate": "drizzle-kit generate --dialect postgresql --schema src/worker/db/schema.ts --out src/worker/db/migrations",
+    "db:migrate": "tsx ./src/worker/db/migrate.ts",
+    "db:seed": "tsx ./src/worker/db/seed.ts"
+  }
 }
