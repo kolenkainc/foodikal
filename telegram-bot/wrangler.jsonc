@@ -4,7 +4,7 @@
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "inventory-api",
+  "name": "foodikal-telegram-bot",
   "main": "./src/index.ts",
   "compatibility_date": "2025-04-02",
   "compatibility_flags": [
@@ -19,11 +19,6 @@
   "upload_source_maps": true,
   "alias": {
     "node-fetch": "./fetch-nolyfill"
-  },
-  "triggers": {
-    "crons": [
-      "0 3 * * *"
-    ]
   },
   /**
    * Smart Placement
@@ -60,10 +55,10 @@
    * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
    */
   // "services": [{ "binding": "MY_SERVICE", "service": "my-service" }],
-  "hyperdrive": [
-    {
-      "binding": "HYPERDRIVE",
-      "id": "ed3132385a7548ba90417d5a416cc2ca"
-    }
-  ]
+  // "hyperdrive": [
+  //   {
+  //     "binding": "HYPERDRIVE",
+  //     "id": "ed3132385a7548ba90417d5a416cc2ca"
+  //   }
+  // ]
 }
