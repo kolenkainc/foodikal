@@ -1,0 +1,38 @@
+# pycache
+__pycache__
+
+# db
+.db
+
+# env
+.env
+.venv
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+#OS
+.DS_Store
+
+# mypy
+.mypy_cache
+
+# ruff
+.ruff_cache
