@@ -5,6 +5,10 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = "~> 4"
     }
+    
+    neon = {
+      source  = "kislerdm/neon"
+    }
   }
 
   backend "s3" {
@@ -20,4 +24,10 @@ terraform {
     use_path_style              = true
     use_lockfile                = true
   }
+}
+
+module "postgres" {
+  source                     = "./modules/postgres/"
+  neon_api_key            = var.neon_api_key
+  neon_project_name               = var.project_name
 }
