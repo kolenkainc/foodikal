@@ -11,19 +11,17 @@ import hubConfig from '../hub.config';
 
 const app = new Hono<{ Bindings: Env }>();
 app.use(sentry(), loggerMiddleware(), contextStorage());
-app
-  .use(
-    '/*',
-    cors({
-      origin: (origin, _: Context) => {
-        return origin.endsWith('foodikal.romashov.tech') ||
-          origin.endsWith('m.foodikal.romashov.tech')
-          ? origin
-          : 'http://localhost:5173';
-      }
-    })
-  )
-  .route('/', createHub(hubConfig));
+app.use(
+  '/*',
+  cors({
+    origin: (origin, _: Context) => {
+      return origin.endsWith('foodikal.romashov.tech') ||
+        origin.endsWith('m.foodikal.romashov.tech')
+        ? origin
+        : 'http://localhost:5173';
+    }
+  })
+);
 
 app.get('/healthcheck', async (c: Context) => {
   console.log('Hello world from Cloudflare and ElasticSearch');
