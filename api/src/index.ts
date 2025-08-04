@@ -6,8 +6,6 @@ import { contextStorage } from 'hono/context-storage';
 import { logger as loggerMiddleware } from 'hono/logger';
 import { swaggerUI } from '@hono/swagger-ui';
 import { cors } from 'hono/cors';
-import { createHub } from 'kolenkainc-honohub';
-import hubConfig from '../hub.config';
 
 const app = new Hono<{ Bindings: Env }>();
 app.use(sentry(), loggerMiddleware(), contextStorage());
@@ -35,7 +33,6 @@ app.get('*', (c: Context) => {
 });
 
 export default withSentry(
-  //@ts-expect-error it should be here
   (env: Env) => {
     return {
       dsn: 'https://9b631feb01da428b471ac1cbd160173f@o164625.ingest.us.sentry.io/4509063427653632',

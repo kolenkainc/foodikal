@@ -11,9 +11,9 @@
     "build": "npm run backend:types && tsc --build",
     "deploy": "wrangler deploy",
     "test": "vitest run --coverage",
-    "db:generate": "drizzle-kit generate --config=src/db/drizzle.config.ts",
-    "db:migrate": "drizzle-kit migrate --config=src/db/drizzle.config.ts",
-    "db:seed": "tsx ./src/db/seed.ts"
+    "start": "ts-node src/index.ts",
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
+    "migration:generate": "typeorm migration:generate ./src/migrations/ --dataSource ./src/data-source.ts"
   },
   "cloudflare": {
     "label": "Vite React Template",
@@ -36,8 +36,11 @@
     "google-spreadsheet": "^4.1.4",
     "googleapis": "^148.0.0",
     "hono": "4.7.1",
+    "pg": "^8.14.1",
     "postgres": "^3.4.5",
-    "tsyringe": "^4.10.0"
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.10.0",
+    "typeorm": "0.3.25"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.9.6",
@@ -55,6 +58,8 @@
     "pg-connection-string": "^2.8.5",
     "prettier": "^3.5.3",
     "reflect-metadata": "^0.2.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "tsx": "^4.20.3",
     "typescript": "5.7.2",
     "typescript-eslint": "8.22.0",
