@@ -7,8 +7,16 @@ export const AppDataSource = new DataSource({
   synchronize: true,
   logging: true,
   ssl: true,
-  entities: ['./src/entity/*.ts'],
-  migrations: ['./src/migrations/*.ts'],
+  entities: [
+    process.env.NODE_ENV === 'production'
+      ? './build/src/entity/*.js'
+      : './src/entity/*.ts'
+  ],
+  migrations: [
+    process.env.NODE_ENV === 'production'
+      ? './build/src/migrations/*.js'
+      : './src/migrations/*.ts'
+  ],
   // entities: ['build/src/entity/*.js'],
   // migrations: ['build/src/migration/*.js'],
   // cli: {
